@@ -32,6 +32,16 @@ public class ChiTietGiayServiceImpl implements ChiTietGiayService {
     }
 
     @Override
+    public void save(ChiTietGiay chiTietGiay) {
+        chiTietGiayRepo.save(chiTietGiay);
+    }
+
+    @Override
+    public ChiTietGiay getByIdCtGiay(UUID id) {
+        return chiTietGiayRepo.findById(id).orElse(null);
+    }
+
+    @Override
     public Optional<ChiTietGiay> getOne(UUID id) {
         return chiTietGiayRepo.findById(id);
     }
@@ -76,5 +86,25 @@ public class ChiTietGiayServiceImpl implements ChiTietGiayService {
     public List<ChiTietGiay> findByIDGiayAndIDSize(Giay giay, Size size) {
         return chiTietGiayRepo.findByGiayAndSize(giay, size);
 
+    }
+
+    @Override
+    public ChiTietGiay findChiTietGiayById(UUID id) {
+        return chiTietGiayRepo.findChiTietGiayById(id);
+    }
+
+    @Override
+    public List<ChiTietGiay> listCTGiayAndActice(Giay giay) {
+        return chiTietGiayRepo.findByGiayAndTrangThaiOrderBySizeDesc(giay, 1);
+    }
+
+    @Override
+    public List<Item> listHoaDonCho(UUID idHoaDon) {
+        return chiTietGiayRepo.listHoaDonCho(idHoaDon);
+    }
+
+    @Override
+    public List<ChiTietGiay> findChiTietGiayByGiayAndSize(Giay giay, Size size) {
+        return chiTietGiayRepo.findChiTietGiayByGiayAndSize(giay,size);
     }
 }
