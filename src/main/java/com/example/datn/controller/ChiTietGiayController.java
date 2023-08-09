@@ -116,6 +116,8 @@ public class ChiTietGiayController {
         model.addAttribute("ctgiayDetail", ctGiay);
         List<ChiTietGiay> listCTGiay = chiTietGiayService.findByIdGiay(id);
         model.addAttribute("listCTGiay", listCTGiay);
+//        ChiTietGiay ctGiay = chiTietGiayService.getByIdCtGiay(id);
+//        model.addAttribute("ctgiayDetail", ctGiay);
         return "viewsManage/chitietgiay/detail";
     }
 
