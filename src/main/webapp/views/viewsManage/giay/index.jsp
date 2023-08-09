@@ -35,6 +35,7 @@
     <table class="table table-bordered bordered-dark mt-3 text-center">
         <thead class="bg-info">
         <tr>
+            <td>STT</td>
             <td>Mã</td>
             <td>Tên</td>
             <td>Trạng thái</td>
@@ -42,8 +43,9 @@
         </tr>
         </thead>
         <tbdoy>
-            <c:forEach items="${list.content}" var="nv" >
+            <c:forEach items="${list.content}" var="nv" varStatus="i">
                 <tr>
+                    <td>${i.index + 1}</td>
                     <td>${nv.ma}</td>
                     <td>${nv.ten}</td>
                     <td>${nv.trangThai}</td>

@@ -15,6 +15,7 @@ import com.example.datn.service.HangService;
 import com.example.datn.service.HinhAnhService;
 import com.example.datn.service.SizeService;
 import com.example.datn.viewModel.KhachHangViewModel;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +72,8 @@ public class ChiTietGiayController {
     public String viewAdd(Model model) {
         ChiTietGiay chiTietGiay = new ChiTietGiay();
         model.addAttribute("chiTietGiay", chiTietGiay);
+//        ChiTietGiay ctGiay = chiTietGiayService.getByIdCtGiay(id);
+//        model.addAttribute("ctGiay", ctGiay);
         model.addAttribute("hinhAnh", hinhAnhRepo.findAll());
         model.addAttribute("giay", giayService.getAll());
         model.addAttribute("size", sizeService.getAll());
@@ -111,11 +114,15 @@ public class ChiTietGiayController {
     public String detail(@PathVariable UUID id, Model model) {
         ChiTietGiay ctGiay = chiTietGiayService.getByIdCtGiay(id);
         model.addAttribute("ctgiayDetail", ctGiay);
+        List<ChiTietGiay> listCTGiay = chiTietGiayService.findByIdGiay(id);
+        model.addAttribute("listCTGiay", listCTGiay);
         return "viewsManage/chitietgiay/detail";
     }
 
     @GetMapping("/viewUpdate/{id}")
-    public String viewUpdate(@PathVariable UUID id, Model model) {
+    public String viewUpdate(HttpServletRequest request, @PathVariable UUID id, Model model) {
+        String referer = request.getHeader("Referer");
+        model.addAttribute("referer", referer);
         ChiTietGiay ctGiay = chiTietGiayService.getByIdCtGiay(id);
         model.addAttribute("chiTietGiay", ctGiay);
         model.addAttribute("hinhAnh", hinhAnhRepo.findAll());
