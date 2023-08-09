@@ -15,6 +15,10 @@ public interface ChiTietGiayService {
 
     void delete(ChiTietGiay chiTietGiay);
 
+    public void save(ChiTietGiay chiTietGiay);
+
+    public ChiTietGiay getByIdCtGiay(UUID id);
+
     Optional<ChiTietGiay> getOne(UUID id);
 
     Page<ChiTietGiay> phanTrang(int pageNo, int size);
@@ -34,6 +38,9 @@ public interface ChiTietGiayService {
     List<ChiTietGiay> findByIDGiayAndIDSize(Giay giay, Size size);
 
     ChiTietGiay findChiTietGiayById(UUID id);
+
+    List<ChiTietGiay> listCTGiayAndActice(Giay giay);
+
     List<Item> listHoaDonCho(UUID idHoaDon);
 
     List<ChiTietGiay> findChiTietGiayByGiayAndSize(Giay giay,Size size);
