@@ -14,10 +14,14 @@ import com.example.datn.service.GiayService;
 import com.example.datn.service.HangService;
 import com.example.datn.service.HinhAnhService;
 import com.example.datn.service.SizeService;
+import com.example.datn.utils.GenerateQRCode;
 import com.example.datn.viewModel.KhachHangViewModel;
+import com.google.zxing.WriterException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,6 +31,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -71,6 +76,8 @@ public class ChiTietGiayController {
     public String viewAdd(Model model) {
         ChiTietGiay chiTietGiay = new ChiTietGiay();
         model.addAttribute("chiTietGiay", chiTietGiay);
+//        ChiTietGiay ctGiay = chiTietGiayService.getByIdCtGiay(id);
+//        model.addAttribute("ctGiay", ctGiay);
         model.addAttribute("hinhAnh", hinhAnhRepo.findAll());
         model.addAttribute("giay", giayService.getAll());
         model.addAttribute("size", sizeService.getAll());
@@ -109,13 +116,19 @@ public class ChiTietGiayController {
 
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable UUID id, Model model) {
+        ChiTietGiay ctGiay = chiTietGiayService.getByIdCtGiay(id);
+        model.addAttribute("ctgiayDetail", ctGiay);
+        List<ChiTietGiay> listCTGiay = chiTietGiayService.findByIdGiay(id);
+        model.addAttribute("listCTGiay", listCTGiay);
 //        ChiTietGiay ctGiay = chiTietGiayService.getByIdCtGiay(id);
 //        model.addAttribute("ctgiayDetail", ctGiay);
         return "viewsManage/chitietgiay/detail";
     }
 
     @GetMapping("/viewUpdate/{id}")
-    public String viewUpdate(@PathVariable UUID id, Model model) {
+    public String viewUpdate(HttpServletRequest request, @PathVariable UUID id, Model model) {
+        String referer = request.getHeader("Referer");
+        model.addAttribute("referer", referer);
         ChiTietGiay ctGiay = chiTietGiayService.getByIdCtGiay(id);
         model.addAttribute("chiTietGiay", ctGiay);
         model.addAttribute("hinhAnh", hinhAnhRepo.findAll());
@@ -149,5 +162,16 @@ public class ChiTietGiayController {
             chiTietGiayService.save(ctGiayDb);
         }
         return "redirect:/giay/hien-thi";
+    }
+
+    @GetMapping("/qrcode")
+    public ResponseEntity<List<ChiTietGiay>> getChiTietGiay() throws IOException, WriterException {
+        List<ChiTietGiay> chiTietGiays = chiTietGiayService.getAll();
+        if (chiTietGiays.size() != 0) {
+            for (ChiTietGiay chiTietGiay : chiTietGiays) {
+                GenerateQRCode.generateQRCode(chiTietGiay);
+            }
+        }
+        return ResponseEntity.ok(chiTietGiayService.getAll());
     }
 }
