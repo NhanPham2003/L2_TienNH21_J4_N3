@@ -44,6 +44,7 @@
 <div class="container">
     <div class="card">
         <div class="card-body">
+            <div align="right"><a onclick="back()" type="button" class="btn btn-dark" data-dismiss="modal">X</a></div>
             <h3 align="center" class="card-title">${ctgiayDetail.giay.ten}</h3>
             <h6 align="center" class="card-subtitle">Mã: ${ctgiayDetail.giay.ma}</h6>
             <div class="row">
@@ -113,8 +114,12 @@
                         </table>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 </div>
+<script>
+    function back(){
+        history.back();
+    }
+</script>
