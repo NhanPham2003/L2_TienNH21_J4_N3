@@ -13,6 +13,17 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        .result {
+            background-color: green;
+            color: #fff;
+            padding: 0px;
+        }
+
+        .row {
+            display: flex;
+        }
+    </style>
 </head>
 <body>
 <div class="col-10 offset-1 mt-3">
@@ -46,9 +57,20 @@
         <div class="col-4">
             <button onclick="back()" type="submit" class="btn btn-dark">Back</button>
             </div>
-        <div class="col-8">
+        <div class="col-4">
             <button type="submit" class="btn btn-primary">Search</button>
             <a class="btn btn-success" href="/chi-tiet-giay/viewAdd">Add</a></div>
+        <div class="col-4">
+            <div class="row">
+                <div class="col">
+                    <div style="width:500px;" id="reader"></div>
+                </div>
+                <div class="col" style="padding:30px;">
+                    <h4>SCAN RESULT</h4><br>
+                    <div id="result">Result Here</div>
+                </div>
+            </div>
+        </div>
     </div>
     <table class="table table-bordered bordered-dark mt-3 text-center" id="myTable">
         <thead class="bg-info">
@@ -226,6 +248,20 @@
     }
 </style>
 </body>
+<script src="/js/app.js"></script>
+<script type="text/javascript">
+    function onScanSuccess(qrCodeMessage) {
+        document.getElementById('result').innerHTML = '<span class="result">' + qrCodeMessage + '</span>';
+    }
+
+    function onScanError(errorMessage) {
+        //handle scan error
+    }
+
+    var html5QrcodeScanner = new Html5QrcodeScanner(
+        "reader", {fps: 10, qrbox: 250});
+    html5QrcodeScanner.render(onScanSuccess, onScanError);
+</script>
 <script>
     // $('#exampleModal').on('show.bs.modal', function (e) {
     //     var id = $(this).find('.modal-body').html(e.relatedTarget.id);
