@@ -9,6 +9,18 @@
     <title>Bootstrap demo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script type="text/javascript" src="https://unpkg.com/@zxing/library@latest"></script>
+<%--    <style>--%>
+<%--        .result {--%>
+<%--            background-color: green;--%>
+<%--            color: #fff;--%>
+<%--            padding: 20px;--%>
+<%--        }--%>
+
+<%--        .row {--%>
+<%--            display: flex;--%>
+<%--        }--%>
+<%--    </style>--%>
 </head>
 <body>
 <div class="col-6 offset-3 mt-3">
@@ -22,7 +34,8 @@
         <form action="/giay/search" method="get">
             <div class="mt-2">
                 <label>Tìm kiếm</label>
-                <input name="keyword" class="form-control" type="text" placeholder="Tên hoặc mã" aria-label="Tên hoặc mã">
+                <input name="keyword" class="form-control" type="text" placeholder="Tên hoặc mã"
+                       aria-label="Tên hoặc mã">
             </div>
             <div class="mt-3">
                 <button type="submit" class="btn btn-primary">Search</button>
@@ -30,11 +43,22 @@
             </div>
         </form>
     </div>
-
+<%--    <div class="fa-qrcode">--%>
+<%--        <div class="row">--%>
+<%--            <div class="col">--%>
+<%--                <div style="width:500px;" id="reader"></div>--%>
+<%--            </div>--%>
+<%--            <div class="col" style="padding:30px;">--%>
+<%--                <h4>SCAN RESULT</h4>--%>
+<%--                <div id="result">Result Here</div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 
     <table class="table table-bordered bordered-dark mt-3 text-center">
         <thead class="bg-info">
         <tr>
+            <td>STT</td>
             <td>Mã</td>
             <td>Tên</td>
             <td>Trạng thái</td>
@@ -42,13 +66,14 @@
         </tr>
         </thead>
         <tbdoy>
-            <c:forEach items="${list.content}" var="nv" >
+            <c:forEach items="${list.content}" var="nv" varStatus="i">
                 <tr>
+                    <td>${i.index + 1}</td>
                     <td>${nv.ma}</td>
                     <td>${nv.ten}</td>
                     <td>${nv.trangThai}</td>
                     <td>
-<%--                        <a onclick="xacNhan(event)" href="/giay/delete/${nv.id}" class="btn btn-danger">Xoa</a>--%>
+                            <%--                        <a onclick="xacNhan(event)" href="/giay/delete/${nv.id}" class="btn btn-danger">Xoa</a>--%>
                         <a href="/giay/viewUpdate/${nv.id}" class="btn btn-primary">Update</a>
                         <a href="/giay/detail/${nv.id}" class="btn btn-success">Detail</a>
                     </td>
@@ -70,13 +95,11 @@
         </nav>
     </div>
 </div>
-
 </body>
-
 <script>
-    function xacNhan(event){
-        var mes= confirm("Ban có chắc muốn xóa không");
-        if (!mes){
+    function xacNhan(event) {
+        var mes = confirm("Ban có chắc muốn xóa không");
+        if (!mes) {
             event.preventDefault();
         }
     }

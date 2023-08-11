@@ -6,13 +6,14 @@
     <title>Chi Tiet Giay</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet"/>
     <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 </header>
 <body>
 <div class="container">
     <h2 align="center" style="font-family: 'Times New Roman'">Update CT Sản Phẩm</h2>
     <div class="col-8 offset-2 mt-3">
+        <button onclick="back()" type="submit" class="btn btn-dark">Back</button>
         <sf:form action="/chi-tiet-giay/update/${chiTietGiay.id}" method="post" modelAttribute="chiTietGiay">
             <div class="row">
                 <div class="col-6 mt-3">
@@ -55,8 +56,10 @@
                         <sf:radiobutton path="trangThai" value="0" cssClass="form-check-input"/>Ngừng bán
                         <sf:errors cssClass="text-danger" path="trangThai" element="span"/>
                     </div>
-                </div><br>
+                </div>
+                <br>
             </div>
+            <br>
             <div class="row">
                 <div class="col-lg-3">
                     <label>Giày</label>
@@ -82,43 +85,46 @@
                         </c:forEach>
                     </sf:select>
                 </div>
-                <div class="row">
-                    <div class="col-lg-3">
-                        <label>Chất liệu thân giày</label>
-                        <sf:select path="chatLieuThanGiay.id" cssClass="form-select">
-                            <c:forEach items="${chatLieuThanGiay}" var="kh">
-                                <sf:option value="${kh.id}">${kh.ten}</sf:option>
-                            </c:forEach>
-                        </sf:select>
-                    </div>
-                    <div class="col-lg-3">
-                        <label>Hãng</label>
-                        <sf:select path="hang.id" cssClass="form-select">
-                            <c:forEach items="${hang}" var="kh">
-                                <sf:option value="${kh.id}">${kh.ten}</sf:option>
-                            </c:forEach>
-                        </sf:select>
-                    </div>
-                    <div class="col-lg-3">
-                        <label>Màu sắc</label>
-                        <sf:select path="mauSac.id" cssClass="form-select">
-                            <c:forEach items="${mauSac}" var="kh">
-                                <sf:option value="${kh.id}">${kh.ten}</sf:option>
-                            </c:forEach>
-                        </sf:select>
-                    </div>
-                    <div class="col-lg-3">
-                        <label>Size</label>
-                        <sf:select path="size.id" cssClass="form-select">
-                            <c:forEach items="${size}" var="kh">
-                                <sf:option value="${kh.id}">${kh.soSize}</sf:option>
-                            </c:forEach>
-                        </sf:select>
-                    </div>
+            </div>
+            <br>
+            <div class="row"><br>
+                <div class="col-lg-3">
+                    <label>Chất liệu thân giày</label>
+                    <sf:select path="chatLieuThanGiay.id" cssClass="form-select">
+                        <c:forEach items="${chatLieuThanGiay}" var="kh">
+                            <sf:option value="${kh.id}">${kh.ten}</sf:option>
+                        </c:forEach>
+                    </sf:select>
+                </div>
+                <div class="col-lg-3">
+                    <label>Hãng</label>
+                    <sf:select path="hang.id" cssClass="form-select">
+                        <c:forEach items="${hang}" var="kh">
+                            <sf:option value="${kh.id}">${kh.ten}</sf:option>
+                        </c:forEach>
+                    </sf:select>
+                </div>
+                <div class="col-lg-3">
+                    <label>Màu sắc</label>
+                    <sf:select path="mauSac.id" cssClass="form-select">
+                        <c:forEach items="${mauSac}" var="kh">
+                            <sf:option value="${kh.id}">${kh.ten}</sf:option>
+                        </c:forEach>
+                    </sf:select>
+                </div>
+                <div class="col-lg-3">
+                    <label>Size</label>
+                    <sf:select path="size.id" cssClass="form-select">
+                        <c:forEach items="${size}" var="kh">
+                            <sf:option value="${kh.id}">${kh.soSize}</sf:option>
+                        </c:forEach>
+                    </sf:select>
                 </div>
             </div>
-            <div class="mt-3 offset-4">
-                <button type="submit" class="btn btn-success">Update</button>
+            <br><br>
+            <div align="center">
+                    <%--                <p>Đường dẫn trước đó: ${referer}</p>--%>
+                <button onclick="back()" type="submit" class="btn btn-success">Update</button>
             </div>
         </sf:form>
     </div>
@@ -126,7 +132,11 @@
 </body>
 </html>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('.form-select').select2();
     });
+
+    function back() {
+        window.history.back();
+    }
 </script>
