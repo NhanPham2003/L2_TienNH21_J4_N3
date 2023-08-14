@@ -103,7 +103,7 @@ public class ChiTietGiayController {
         } else {
             chiTietGiayService.add(chiTietGiay);
             session.setAttribute("message", "Thêm thành công");
-            return "redirect:/giay/hien-thi";
+            return "redirect:/chi-tiet-giay/hien-thi";
         }
     }
 
@@ -161,7 +161,7 @@ public class ChiTietGiayController {
             ctGiayDb.setSize(chiTietGiay.getSize());
             chiTietGiayService.save(ctGiayDb);
         }
-        return "redirect:/giay/hien-thi";
+        return "redirect:/chi-tiet-giay/hien-thi";
     }
 
     @GetMapping("/qrcode")
